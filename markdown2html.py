@@ -50,7 +50,7 @@ if __name__ == '__main__':
                 list_item.append(f'<li>{list_text}</li>')
             # order-list
             match_order_list = re.compile(r'^(\*{1})\s(.+)$',
-                                            re.MULTILINE).match(line)
+                                          re.MULTILINE).match(line)
             if match_order_list:
                 order_text = match_order_list.group(2)
                 order_item.append(f'<li>{order_text}</li>')
