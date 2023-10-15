@@ -56,7 +56,7 @@ if __name__ == '__main__':
             for list_line in list_item:
                 if list_line == '<ul>':
                     html_file.write(f'{list_line}\n')
-                html_file.write(f'  {list_line.strip()}\n')
+                html_file.write(f'{list_line.strip()}\n')
                 print(list_line)
             html_file.write('</ul>')
 
