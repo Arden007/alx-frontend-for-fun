@@ -31,10 +31,10 @@ if __name__ == '__main__':
     # convert md to html
     for line in md_content:
         if line.strip() != "":
-            if match := re.compile(r'^(#{1,6})\s(.+)$', re.MULTILINE).match(line):
-                level = len(match.group(1))
-                text = match.group(2)
-                html_content.append(f'<h{level}>{text}</h{level}>')
+            match = re.compile(r'^(#{1,6})\s(.+)$', re.MULTILINE).match(line)
+            level = len(match.group(1))
+            text = match.group(2)
+            html_content.append(f'<h{level}>{text}</h{level}>')
 
     # write in output file
     with open(output_file, 'w') as html_file:
