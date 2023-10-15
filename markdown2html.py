@@ -29,6 +29,8 @@ if __name__ == '__main__':
     html_content = []
     # keep track of list_item
     list_item = ['<ul>']
+    # keep track of order_item
+    order_item = ['<ol>']
 
     # convert md to html
     for line in md_content:
@@ -46,6 +48,12 @@ if __name__ == '__main__':
             if match_ordered_list:
                 list_text = match_ordered_list.group(2)
                 list_item.append(f'<li>{list_text}</li>')
+            # order-list
+            match_order_list = re.compile(r'^(\*{1})\s(.+)$',
+                                            re.MULTILINE).match(line)
+            if match_order_list:
+                order_text = match_order_list.group(2)
+                order_item.append(f'<li>{order_text}</li>')
 
     # write in output file
     with open(output_file, 'w') as html_file:
@@ -54,10 +62,11 @@ if __name__ == '__main__':
                 html_file.write(f'{header_line}\n')
         if len(list_item) != 1:
             for list_line in list_item:
-                if list_line == '<ul>':
-                    html_file.write(f'{list_line}\n')
                 html_file.write(f'{list_line.strip()}\n')
-                print(list_line)
             html_file.write('</ul>')
+        if len(order_item) != 1:
+            for order_line in order_item:
+                html_file.write(f'{order_line.strip()}\n')
+            html_file.write('</ol>')
 
     exit(0)
