@@ -27,18 +27,35 @@ if __name__ == '__main__':
 
     # keep track of the html content
     html_content = []
+    # keep track of list_item
+    list_item = ['<ul>']
 
     # convert md to html
     for line in md_content:
         if line.strip() != "":
-            match = re.compile(r'^(#{1,6})\s(.+)$', re.MULTILINE).match(line)
-            level = len(match.group(1))
-            text = match.group(2)
-            html_content.append(f'<h{level}>{text}</h{level}>')
+            # header
+            match_header = re.compile(r'^(#{1,6})\s(.+)$', re.MULTILINE).match(line)
+            if match_header:
+                level = len(match_header.group(1))
+                text = match_header.group(2)
+                html_content.append(f'<h{level}>{text}</h{level}>')
+            # unordered-list
+            match_ordered_list = re.compile(r'^(-{1})\s(.+)$', re.MULTILINE).match(line)
+            if match_ordered_list:
+                list_text = match_ordered_list.group(2)
+                list_item.append(f'<li>{list_text}</li>')
 
     # write in output file
     with open(output_file, 'w') as html_file:
-        for line in html_content:
-            html_file.write(f'{line}\n')
+        if html_content != []:
+            for header_line in html_content:
+                html_file.write(f'{header_line}\n')
+        if len(list_item) != 1:
+            for list_line in list_item:
+                if list_line == '<ul>':
+                    html_file.write(f'{list_line}\n')
+                html_file.write(f'  {list_line.strip()}\n')
+                print(list_line)
+            html_file.write(f'</ul>')
 
     exit(0)
