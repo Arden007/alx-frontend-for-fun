@@ -54,6 +54,7 @@ if __name__ == '__main__':
             if match_order_list:
                 order_text = match_order_list.group(2)
                 order_item.append(f'<li>{order_text}</li>')
+        print(line)
 
     # write in output file
     with open(output_file, 'w') as html_file:
