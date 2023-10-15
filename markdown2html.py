@@ -12,7 +12,7 @@ if __name__ == '__main__':
         print("Usage: ./markdown2html.py README.md README.html",
               file=sys.stderr)
         exit(1)
-    
+
     # save file
     input_file = sys.argv[1]
     output_file = sys.argv[2]
@@ -34,13 +34,15 @@ if __name__ == '__main__':
     for line in md_content:
         if line.strip() != "":
             # header
-            match_header = re.compile(r'^(#{1,6})\s(.+)$', re.MULTILINE).match(line)
+            match_header = re.compile(r'^(#{1,6})\s(.+)$',
+                                      re.MULTILINE).match(line)
             if match_header:
                 level = len(match_header.group(1))
                 text = match_header.group(2)
                 html_content.append(f'<h{level}>{text}</h{level}>')
             # unordered-list
-            match_ordered_list = re.compile(r'^(-{1})\s(.+)$', re.MULTILINE).match(line)
+            match_ordered_list = re.compile(r'^(-{1})\s(.+)$',
+                                            re.MULTILINE).match(line)
             if match_ordered_list:
                 list_text = match_ordered_list.group(2)
                 list_item.append(f'<li>{list_text}</li>')
@@ -56,6 +58,6 @@ if __name__ == '__main__':
                     html_file.write(f'{list_line}\n')
                 html_file.write(f'  {list_line.strip()}\n')
                 print(list_line)
-            html_file.write(f'</ul>')
+            html_file.write('</ul>')
 
     exit(0)
